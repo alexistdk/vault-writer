@@ -38,6 +38,7 @@ func (service *Service) getService(filePath string) *Service {
 
 func (service Service) getEnvVars(filePath string) string {
 	service.getService(filePath)
+	// TODO: identificar cronjobs que no tienen containers
 	containers := service.Spec.Template.Spec.Containers[0]
 	env := containers.Env
 	var str strings.Builder

@@ -61,10 +61,9 @@ func getFilesInPath(path string, pathsSlice *[]string) {
 		pathFile := filepath.Join(path, f.Name())
 		*pathsSlice = append(*pathsSlice, pathFile)
 	}
-
 }
 
-func (yml Yaml) getPaths(file string) []string {
+func (yml Yaml) getYamls(file string) []string {
 	yml.readYaml(file)
 	clusters := len(yml.Clusters)
 	paths := make([]string, 0, 1000)

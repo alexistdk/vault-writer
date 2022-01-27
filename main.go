@@ -14,7 +14,7 @@ func main() {
 		log.Fatal("Tenes que pasarle un yaml")
 	}
 
-	paths := yml.getPaths(os.Args[1])
+	paths := yml.getYamls(os.Args[1])
 	for i := 0; i < len(paths); i++ {
 		secrets := service.getEnvVars(paths[i])
 		fmt.Println(paths[i])
