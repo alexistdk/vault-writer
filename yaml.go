@@ -45,11 +45,9 @@ func (yml Yaml) getPaths(file string) []string {
 		ns := len(yml.Clusters[i].Namespaces)
 		for j := 0; j < ns; j++ {
 			files := yml.Clusters[i].Namespaces[j].Services
-			auxPath := make([]string, len(files))
 			for k := 0; k < len(files); k++ {
-				auxPath[k] = fmt.Sprint(files[k].File)
-				// paths[k] = auxPath[k]
-				paths = append(paths, auxPath[k])
+				auxPath := fmt.Sprint(files[k].File)
+				paths = append(paths, auxPath)
 			}
 		}
 	}
