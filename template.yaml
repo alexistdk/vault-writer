@@ -10,3 +10,13 @@ clusters:
           - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-core.yaml
           - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-import-xlsx.yaml
           - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-mailjet.yaml
+  - name: chekin-prd
+    namespaces:
+      - name: pms
+        services:
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-365villas.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-alice.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-apaleo.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-backend-core.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-backend-import-xlsx.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-backend-mailjet.yaml
