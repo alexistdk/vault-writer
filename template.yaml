@@ -1,6 +1,9 @@
 url: https://vault.mgt.chekin.com
 clusters:
   - name: chekin-dev
+    configmaps:
+      - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/config-env-rabbit.yaml
+      - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/configmaps
     namespaces:
       - name: pms
         services:
