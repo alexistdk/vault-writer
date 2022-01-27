@@ -9,14 +9,18 @@ import (
 )
 
 type Yaml struct {
-	URL      interface{} `yaml:"url"`
+	URL      string `yaml:"url"`
 	Clusters []struct {
-		Name       interface{} `yaml:"name"`
+		Name       string `yaml:"name"`
+		Configmaps []struct {
+			File string `yaml:"file"`
+			Path string `yaml:"path"`
+		} `yaml:"configmaps"`
 		Namespaces []struct {
-			Name     interface{} `yaml:"name"`
+			Name     string `yaml:"name"`
 			Services []struct {
-				File interface{} `yaml:"file"`
-				Path interface{} `yaml:"path"`
+				Path string `yaml:"path"`
+				File string `yaml:"file"`
 			} `yaml:"services"`
 		} `yaml:"namespaces"`
 	} `yaml:"clusters"`
@@ -42,7 +46,7 @@ func (yml *Yaml) getNamespaces(i int) int { return len(yml.Clusters[i].Namespace
 func (yml *Yaml) getFiles(i int, j int, pathsSlice *[]string) {
 	keys := yml.Clusters[i].Namespaces[j].Services
 	for k := 0; k < len(keys); k++ {
-		if keys[k].File != nil {
+		if keys[k].File != "" {
 			auxPath := fmt.Sprint(keys[k].File)
 			*pathsSlice = append(*pathsSlice, auxPath)
 		} else {
