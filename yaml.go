@@ -33,12 +33,32 @@ func (yml *Yaml) readYaml(file string) *Yaml {
 	return yml
 }
 
+func (yml *Yaml) getClusters() int { return len(yml.Clusters) }
+
+func (yml *Yaml) getNamespaces(i int) int { return len(yml.Clusters[i].Namespaces) }
+
 func (yml Yaml) getPaths(file string) []string {
 	yml.readYaml(file)
-	files := yml.Clusters[0].Namespaces[0].Services
-	paths := make([]string, len(files))
-	for i := 0; i < len(files); i++ {
-		paths[i] = fmt.Sprint(files[i].File)
+	clusters := len(yml.Clusters)
+	paths := make([]string, 0, 100)
+	for i := 0; i < clusters; i++ {
+		ns := len(yml.Clusters[i].Namespaces)
+		for j := 0; j < ns; j++ {
+			files := yml.Clusters[i].Namespaces[j].Services
+			auxPath := make([]string, len(files))
+			for k := 0; k < len(files); k++ {
+				auxPath[k] = fmt.Sprint(files[k].File)
+				// paths[k] = auxPath[k]
+				paths = append(paths, auxPath[k])
+			}
+		}
 	}
+	/*
+		files := yml.Clusters[0].Namespaces[0].Services
+		paths := make([]string, len(files))
+		for i := 0; i < len(files); i++ {
+			paths[i] = fmt.Sprint(files[i].File)
+		}
+	*/
 	return paths
 }
