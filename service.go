@@ -13,9 +13,16 @@ type Service struct {
 		Template struct {
 			Spec struct {
 				Containers []struct {
-					Env []struct {
-						Name  string `yaml:"name"`
-						Value string `yaml:"value"`
+					Name string `yaml:"name"`
+					Env  []struct {
+						Name      string `yaml:"name"`
+						Value     string `yaml:"value,omitempty"`
+						ValueFrom struct {
+							ConfigMapKeyRef struct {
+								Name string `yaml:"name"`
+								Key  string `yaml:"key"`
+							} `yaml:"configMapKeyRef"`
+						} `yaml:"valueFrom,omitempty"`
 					} `yaml:"env"`
 				} `yaml:"containers"`
 			} `yaml:"spec"`
