@@ -3,9 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	// var service Service
-	// secrets := service.getEnvVars(filePath)
-	// fmt.Println(secrets)
 	var yml Yaml
 	var service Service
 
