@@ -67,7 +67,7 @@ func getFilesInPath(path string, pathsSlice *[]string) {
 func (yml Yaml) getPaths(file string) []string {
 	yml.readYaml(file)
 	clusters := len(yml.Clusters)
-	paths := make([]string, 0, 200)
+	paths := make([]string, 0, 1000)
 	for i := 0; i < clusters; i++ {
 		ns := len(yml.Clusters[i].Namespaces)
 		for j := 0; j < ns; j++ {
