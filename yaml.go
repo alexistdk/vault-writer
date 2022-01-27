@@ -20,8 +20,8 @@ type Yaml struct {
 	} `yaml:"clusters"`
 }
 
-func (yml *Yaml) readYaml() *Yaml {
-	yamlFile, err := ioutil.ReadFile("template.yaml")
+func (yml *Yaml) readYaml(file string) *Yaml {
+	yamlFile, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}
@@ -33,8 +33,8 @@ func (yml *Yaml) readYaml() *Yaml {
 	return yml
 }
 
-func (yml Yaml) getPaths() []string {
-	yml.readYaml()
+func (yml Yaml) getPaths(file string) []string {
+	yml.readYaml(file)
 	files := yml.Clusters[0].Namespaces[0].Services
 	paths := make([]string, len(files))
 	for i := 0; i < len(files); i++ {
