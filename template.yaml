@@ -1,0 +1,12 @@
+url: https://vault.mgt.chekin.com
+clusters:
+  - name: chekin-dev
+    namespaces:
+      - name: pms
+        services:
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-365villas.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-alice.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-apaleo.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-core.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-import-xlsx.yaml
+          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-backend-mailjet.yaml
