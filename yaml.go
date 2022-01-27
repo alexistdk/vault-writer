@@ -67,15 +67,31 @@ func getFilesInPath(path string, pathsSlice *[]string) {
 	}
 }
 
-func (yml Yaml) getYamls(file string) []string {
+func (yml *Yaml) getConfigMaps(i int, pathsSlice *[]string) {
+	// esta funcion comparte codigo con getFiles. TODO: eliminar codigo repetido
+	configMaps := yml.Clusters[i].Configmaps
+	for k := 0; k < len(configMaps); k++ {
+		if configMaps[k].File != "" {
+			auxPath := fmt.Sprint(configMaps[k].File)
+			*pathsSlice = append(*pathsSlice, auxPath)
+		} else {
+			auxPath := fmt.Sprint(configMaps[k].Path)
+			getFilesInPath(auxPath, pathsSlice)
+		}
+	}
+}
+
+func (yml Yaml) getYamls(file string) ([]string, []string) {
 	yml.readYaml(file)
 	clusters := len(yml.Clusters)
 	paths := make([]string, 0, 1000)
+	pathsConfigMaps := make([]string, 0, 10)
 	for i := 0; i < clusters; i++ {
 		ns := len(yml.Clusters[i].Namespaces)
 		for j := 0; j < ns; j++ {
 			yml.getFiles(i, j, &paths)
 		}
+		yml.getConfigMaps(i, &pathsConfigMaps)
 	}
-	return paths
+	return paths, pathsConfigMaps
 }
