@@ -44,3 +44,19 @@ func (cm *ConfigMap) getValue(requestedKey string) string {
 	}
 	return ""
 }
+
+func (cm *ConfigMap) getKeys() []reflect.Value {
+	data := cm.getData()
+	dict := reflect.ValueOf(data)
+	return dict.MapKeys()
+}
+
+func (cm *ConfigMap) getValues(configmaps []string) []map[string]string {
+	sliceEnvVars := make([]map[string]string, 0, 200)
+	for i := 0; i < len(configmaps); i++ {
+		config := cm.getConfigMap(configmaps[i])
+		value := config.getValue("police_registration.exchange")
+		fmt.Println(value)
+	}
+	return sliceEnvVars
+}
