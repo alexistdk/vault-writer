@@ -43,33 +43,37 @@ func (service *Service) getService(filePath string) *Service {
 	return service
 }
 
-func (service Service) getEnvVarFromYaml() string {
+func getEnvVarFromConfigMap(requestedKey string, dataConfigMap []map[string]string) string {
+	for cm := range dataConfigMap {
+		dict := dataConfigMap[cm]
+		if v, found := dict[requestedKey]; found {
+			return v
+		}
+	}
+	return ""
+}
+
+func (service Service) getEnvVars(filePath string, dataConfigMap []map[string]string) string {
+	service.getService(filePath)
+	// TODO: identificar cronjobs que no tienen containers
 	containers := service.Spec.Template.Spec.Containers[0]
 	env := containers.Env
 	var str strings.Builder
 	str.WriteString("{\n")
-	var cm ConfigMap
 	for i := 0; i < len(env); i++ {
+		name := env[i].Name
 		configmap := env[i].ValueFrom.ConfigMapKeyRef
 		if (env[i].ValueFrom.ConfigMapKeyRef) == configmap {
 			if configmap.Name != "" && configmap.Key != "" {
-				key := cm.getValue(configmap.Key)
-				str.WriteString("\t\"" + configmap.Name + "\": \"" + key + "\"\n")
+				key := getEnvVarFromConfigMap(configmap.Key, dataConfigMap)
+				str.WriteString("\t\"" + name + "\": \"" + key + "\"\n")
 			}
 		}
 		if env[i].Value != "" {
-			str.WriteString("\t\"" + env[i].Name + "\": \"" + env[i].Value + "\"\n")
+			str.WriteString("\t\"" + name + "\": \"" + env[i].Value + "\"\n")
 		}
 
 	}
 	str.WriteString("}")
 	return str.String()
-}
-
-func (service Service) getEnvVars(filePath string) string {
-	service.getService(filePath)
-	// TODO: identificar cronjobs que no tienen containers
-	secrets := service.getEnvVarFromYaml()
-
-	return secrets
 }
