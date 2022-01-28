@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
@@ -16,19 +15,11 @@ func main() {
 	}
 
 	paths, configMaps := yml.getYamls(os.Args[1])
+	cmValues := cm.getValues(configMaps)
 	sliceOfScrets := make([]string, 0, 200)
 	for i := 0; i < len(paths); i++ {
-		secrets := service.getEnvVars(paths[i])
+		// los secrets son strings
+		secrets := service.getEnvVars(paths[i], cmValues)
 		sliceOfScrets = append(sliceOfScrets, secrets)
-		fmt.Println(paths[i])
-		fmt.Println(secrets)
-		fmt.Println("---------------------------------------------------------------")
 	}
-
-	for i := 0; i < len(configMaps); i++ {
-		config := cm.getConfigMap(configMaps[i])
-		value := config.getValue("police_registration.exchange")
-		fmt.Println(value)
-	}
-
 }
