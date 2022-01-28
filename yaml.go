@@ -39,10 +39,6 @@ func (yml *Yaml) readYaml(file string) *Yaml {
 	return yml
 }
 
-func (yml *Yaml) getClusters() int { return len(yml.Clusters) }
-
-func (yml *Yaml) getNamespaces(i int) int { return len(yml.Clusters[i].Namespaces) }
-
 func (yml *Yaml) getFiles(i int, j int, pathsSlice *[]string) {
 	keys := yml.Clusters[i].Namespaces[j].Services
 	for k := 0; k < len(keys); k++ {
@@ -79,19 +75,4 @@ func (yml *Yaml) getConfigMaps(i int, pathsSlice *[]string) {
 			getFilesInPath(auxPath, pathsSlice)
 		}
 	}
-}
-
-func (yml Yaml) getYamls(file string) ([]string, []string) {
-	yml.readYaml(file)
-	clusters := len(yml.Clusters)
-	paths := make([]string, 0, 1000)
-	pathsConfigMaps := make([]string, 0, 10)
-	for i := 0; i < clusters; i++ {
-		ns := len(yml.Clusters[i].Namespaces)
-		for j := 0; j < ns; j++ {
-			yml.getFiles(i, j, &paths)
-		}
-		yml.getConfigMaps(i, &pathsConfigMaps)
-	}
-	return paths, pathsConfigMaps
 }
