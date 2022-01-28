@@ -45,18 +45,22 @@ func (cm *ConfigMap) getValue(requestedKey string) string {
 	return ""
 }
 
-func (cm *ConfigMap) getKeys() []reflect.Value {
-	data := cm.getData()
-	dict := reflect.ValueOf(data)
-	return dict.MapKeys()
-}
-
 func (cm *ConfigMap) getValues(configmaps []string) []map[string]string {
 	sliceEnvVars := make([]map[string]string, 0, 200)
+	auxMap := make(map[string]string)
 	for i := 0; i < len(configmaps); i++ {
 		config := cm.getConfigMap(configmaps[i])
-		value := config.getValue("police_registration.exchange")
-		fmt.Println(value)
+		data := config.getData()
+		dict := reflect.ValueOf(data)
+		if dict.Kind() == reflect.Map {
+			for _, key := range dict.MapKeys() {
+				auxValue := dict.MapIndex(key).Interface()
+				value := fmt.Sprint(auxValue)
+				k := fmt.Sprint(key)
+				auxMap[k] = value
+				sliceEnvVars = append(sliceEnvVars, auxMap)
+			}
+		}
 	}
 	return sliceEnvVars
 }
