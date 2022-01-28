@@ -3,23 +3,32 @@ clusters:
   - name: chekin-dev
     configmaps:
       - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/config-env-rabbit.yaml
-      - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/configmaps
+      - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/config-s3-buckets.yaml
+      - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/configmap-hosts.yaml
+      # - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/configmaps
     namespaces:
-      - name: pms
+      - name: stat
         services:
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers_stat
+          # - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/crone_jobs
+          # - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-365villas.yaml
+      - name: police
+        services:
+          - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers_police
+      - name: workers
+        services:
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers_ecm
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers_locks
-          - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/workers_police
-          # - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/crone_jobs
-          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_staging/chekin-365villas.yaml
   - name: chekin-prd
     namespaces:
-      - name: pms
+      - name: police
         services:
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/workers_police
+      - name: stats
+        services:
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/workers_stat
+      - name: workers
+        services:
           - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/workers
-          # - path: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/crone_jobs
-          - file: /home/alexis/craftech/clientes/chekin/microservicios/chekin-backend-core/k8s_configs_production/chekin-365villas.yaml
+
